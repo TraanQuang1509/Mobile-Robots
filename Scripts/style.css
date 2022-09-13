@@ -1,0 +1,156 @@
+body {
+  padding: 1rem;
+}
+
+.card{
+    text-align: center;
+}
+body h1, h2{
+    text-align: center;
+}
+
+/* Auto Slide Button */
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+  }
+  .switch input { 
+    padding-left: 50px;
+	opacity: 0;
+	width: 0;
+	height: 0;
+  }
+  
+  .slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+  }
+  
+  .slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+  }
+  
+  input:checked + .slider {
+	background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+	box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+	border-radius: 34px;
+  }
+  
+  .slider.round:before {
+	border-radius: 50%;
+  }
+
+  #Auto h3{
+    text-align: end;
+  }
+
+  /* Controller */
+  .controller {
+    margin: auto;
+    display: grid;
+    width: 200px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-row: 1fr 1fr;
+    gap:4px;
+  }
+
+  .controller i {
+    font-size: 2rem;
+    transition: 0.3s;
+	  transition-property: background;
+  }
+
+  .controller #up {
+    grid-column: 2/3 !important;
+  }
+  /* .controller > div {
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  } */
+  i:hover{
+      background: rgb(78, 83, 63);
+  }
+
+  /* Car */
+  .obstacles {
+    width: 90%;
+    display: grid;
+    margin: 0 auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  .obstacles>div {
+    width: 200px;
+    height: 100px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .obstacles #first {
+    transform-origin: right bottom;
+    transform: rotateZ(-30deg);
+  }
+
+  .obstacles #third {
+    transform-origin: left bottom;
+    transform: rotateZ(30deg);
+  }
+
+  .obstacles #car {
+    display: flex;
+    flex-direction: column;
+    border: none;
+    grid-column: 2/3;
+    width: 150px;
+    height: auto;
+  }
+  #car > div {
+    border: 1px solid black;
+}
+
+.test_motor{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.header span{
+	color: #9BC2E9;
+  font-size: 50px;
+}

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Supervise And Control Autonomous Car System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body {
+            background-color: cornsilk;
+            /* text-align: center; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header" style="text-align: center;">
+        <h3 style=" font-size: 50px;"> Supervise And Control <span> Autonomous Car System </span></h3>
+    </div>
+    <h2>Designed By Quan Dao and Quang Tran</h2>
+    <br>
+    <div class="row">
+        <div class="col-sm-6" id="Auto">
+            <h3>Auto</h3>
+        </div>
+        <div class="col-sm-6">
+            <label class="switch">
+                <input type="checkbox" id="auto_mode">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <br>    
+                <h2 text-align: center>1.Manual:</h2>
+                <div class="card-body">
+                    <div>
+                        <div class="controller">                           
+                            <button type="button" class="btn btn-primary" id='up' onclick="up()">
+                                <i class="fas fa-chevron-up"></i>
+                            </button>                           
+                            <div>
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="left()">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="down()">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="right()">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>           
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="stop()" style="margin-top: 10px;">
+                            <span>Stop</span>
+                        </button>
+                    </div>
+                    <br>
+                    <h2 text-align: center>2. Test Motor:</h2>
+                        <div class="test_motor">
+                            <span style="font-size:28px; text-align: end; margin-right: 15px;">Left: </span>
+                            <button type="button" class="btn btn-primary" onclick="test_left()" style="height: 50px; width: 80px; margin-bottom: 10px;">
+                                <i class="fas fa-caret-left" style="font-size: 40px;"></i>
+                            </button>
+                            <span style="font-size:28px; text-align: end; margin-right: 15px;">Right: </span>
+                            <button type="button" class="btn btn-primary" onclick="test_right()" style="height: 50px; width: 80px;">
+                                <i class="fas fa-caret-right" style="font-size: 40px;"></i>
+                            </button>
+                        </div>
+                        <br>  
+                    <h2 text-align: center>3. Motor's speed (%):</h2>
+
+                    <form action="" id="form">
+                        <input type="range" class="form-range" name="v" min="0" max="100" step="1" id="Speed">
+                        <button type="submit" class="btn btn-primary" style="font-size: 35px;">Apply</button>
+                    </form>
+                    <br> <br> <br>  
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- SUPERVISE  -->
+        <!-- --------------------->
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">STATUS</h5>
+                    <div class="obstacles">
+                        <div id='first' style="background-color: #0F0;">
+                            <span>50 cm</span>
+                        </div>
+
+                        <div id='second' style="background-color: #0F0;">
+                            <span>50 cm</span>
+
+                        </div>
+
+                        <div id='third' style="background-color: #0F0;">
+                            <span>50 cm</span>
+                        </div>
+
+                        <div id='car'>
+                            <img src='xe.png' alt='car' />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>	
+<!-- Java Scripts -->
+    <script>
+        $(document).ready(function(){
+            $(document).on('submit','#form', function(){
+                $.post("speed.php",$('#form').serialize(), function(){
+                    alert("Speed is updated!")
+                });
+                return false;
+            });
+            Auto_Checking();
+            updateDistance();
+        });
+
+        function up(){
+            $.post("up.php");
+        }
+        function down(){
+            $.post("down.php");
+        }
+        function left(){
+           $.post("left.php") 
+        }
+         function right(){
+            $.post("right.php")
+        }
+        function stop(){
+            $.post("stop.php")
+        }
+        function test_left(){
+            $.post("test_left.php")
+        }
+        function test_right(){
+            $.post("test_right.php")
+        }
+        setInterval(updateDistance,500);
+        function updateDistance(){
+            $.post("GetData.php",
+            function(data){
+                var left = data[0].left1;
+                var center = data[0].center1;
+                var right = data[0].right1;
+                document.getElementById("first").innerHTML = left;
+                document.getElementById("second").innerHTML = center;
+                document.getElementById("third").innerHTML = right;
+                if (left > 50)
+                {
+                    document.getElementById("first").style.backgroundColor = "#0F0";
+                }
+                else if (left <= 50 & left >= 30)
+                {
+                    document.getElementById("first").style.backgroundColor = "#FF0";
+                }
+                else {
+                    document.getElementById("first").style.backgroundColor = "#F00";
+                }
+
+                if (center > 50)
+                {
+                    document.getElementById("second").style.backgroundColor = "#0F0";
+                }
+                else if (center <= 50 & center >= 30)
+                {
+                    document.getElementById("second").style.backgroundColor = "#FF0";
+                }
+                else {
+                    document.getElementById("second").style.backgroundColor = "#F00";
+                }
+
+                if (right > 50)
+                {
+                    document.getElementById("third").style.backgroundColor = "#0F0";
+                }
+                else if (right <= 50 & right >= 30)
+                {
+                    document.getElementById("third").style.backgroundColor = "#FF0";
+                }
+                else {
+                    document.getElementById("third").style.backgroundColor = "#F00";
+                }
+            }
+            )
+        }
+        setInterval(Auto_Checking,500);
+        function Auto_Checking(){
+            if (document.getElementById('auto_mode').checked == true)
+            {
+                $.post("auto_on.php");
+            }
+            else {
+                $.post("auto_off.php");
+            }
+        }
+    </script>
+
+</body>
+
+</html>
